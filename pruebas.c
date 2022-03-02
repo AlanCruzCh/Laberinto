@@ -64,7 +64,7 @@ int *avanza_izquierda(int laberinto_aux[][7], int fila, int columna, int posicio
             posicion_fila_columna_bandera[2] = 2;  /*2 es la bandera para que baje */
             return posicion_fila_columna_bandera;
         }
-        else if ((laberinto_aux[fila][columna + 1] != 1) && (columna != 0)){
+        else if ((laberinto_aux[fila][columna + 1] != 1) && (columna != 7)){
             posicion_fila_columna_bandera[0] = fila;
             posicion_fila_columna_bandera[2] = 0; /* 0 es la bandera para que valla a la derecha */
             return posicion_fila_columna_bandera;
@@ -93,25 +93,30 @@ int main(){
                             {0,0,0,0,0,0,0},
                             {0,1,0,0,1,0,0}};
                             */
-    int laberinto[7][7] = { {0,0,0,0,0,0,0},
+    int laberinto[7][7] = { {1,1,1,1,1,1,1},
+                            {0,0,0,0,1,1,1},
                             {1,1,1,1,1,1,1},
-                            {1,0,1,1,1,1,1},
                             {0,0,1,1,1,1,1},
                             {1,0,1,1,1,0,1},
                             {0,0,0,0,0,0,0},
                             {0,1,0,0,1,0,0}};
     
     int posicion_fila_columna_bandera[3] = {0,0,0};
-    int fila = 0; 
-    int columna = 0;  
+    int fila = 1; 
+    int columna = 3;  
     int bandera = 0;
     int *derecha, *izquierda, *abajo, *arriba; 
+    /*
+
+    Listas 
+
     derecha = avanza_derecha(laberinto, fila, columna, posicion_fila_columna_bandera);
     fila = derecha[0];
     columna = derecha[1];
     bandera = derecha[2];    
     printf("%d %d %d\n\n", fila, columna, bandera);
 
+    Listas
     izquierda = avanza_izquierda(laberinto, fila, columna, posicion_fila_columna_bandera);
     fila = izquierda[0];
     columna = izquierda[1];
