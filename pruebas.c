@@ -81,7 +81,6 @@ int *avanza_izquierda(int laberinto_aux[][7], int fila, int columna, int posicio
     return avanza_izquierda(laberinto_aux,fila,columna - 1, posicion_fila_columna_bandera);
 }
 
-
 int *avanza_abajo(int laberinto_aux[][7], int fila, int columna, int posicion_fila_columna_bandera[]){
     if ((laberinto_aux[fila][columna + 1] != 1) && (columna != 6)){
         laberinto_aux[fila][columna] = 2;
@@ -122,7 +121,7 @@ int *avanza_abajo(int laberinto_aux[][7], int fila, int columna, int posicion_fi
     return avanza_abajo(laberinto_aux,fila + 1,columna, posicion_fila_columna_bandera);
 }
 
-int *avanza_abajo(int laberinto_aux[][7], int fila, int columna, int posicion_fila_columna_bandera[]){
+int *avanza_arriba(int laberinto_aux[][7], int fila, int columna, int posicion_fila_columna_bandera[]){
     if ((laberinto_aux[fila][columna + 1] != 1) && (columna != 6)){
         laberinto_aux[fila][columna] = 2;
         posicion_fila_columna_bandera[0] = fila;
@@ -137,7 +136,7 @@ int *avanza_abajo(int laberinto_aux[][7], int fila, int columna, int posicion_fi
         posicion_fila_columna_bandera[2] = 1; 
         return posicion_fila_columna_bandera;
     }
-    else if ((laberinto_aux[fila + 1][columna] == 1) || (fila == 6)){
+    else if ((laberinto_aux[fila - 1][columna] == 1) || (fila == 0)){
         posicion_fila_columna_bandera[0] = fila;
         laberinto_aux[fila][columna] = 2;
         if ((laberinto_aux[fila][columna + 1] != 1) && (columna != 6)){
@@ -150,22 +149,19 @@ int *avanza_abajo(int laberinto_aux[][7], int fila, int columna, int posicion_fi
             posicion_fila_columna_bandera[2] = 1; 
             return posicion_fila_columna_bandera;
         }    
-        else if((laberinto_aux[fila - 1][columna] != 1) && (fila != 0)){
+        else if((laberinto_aux[fila + 1][columna] != 1) && (fila != 6)){
             posicion_fila_columna_bandera[1] = columna;
-            posicion_fila_columna_bandera[2] = 3; /* 3 es la bandera para que suba */
+            posicion_fila_columna_bandera[2] = 2; 
             return posicion_fila_columna_bandera;
         }
     }
     else{
         laberinto_aux[fila][columna] = 2;
     }
-    return avanza_abajo(laberinto_aux,fila + 1,columna, posicion_fila_columna_bandera);
+    return avanza_arriba(laberinto_aux,fila - 1,columna, posicion_fila_columna_bandera);
 }
-
-
 
 int main(){
-    /*
     int laberinto[7][7] = { {0,1,1,1,1,1,1},
                             {0,0,0,0,1,1,1},
                             {1,0,1,1,1,1,1},
@@ -173,17 +169,8 @@ int main(){
                             {1,0,1,1,1,0,1},
                             {0,0,0,0,0,0,0},
                             {0,1,0,0,1,0,0}};
-                            */
-    int laberinto[7][7] = { {0,0,0,0,0,0,0},
-                            {0,1,1,1,1,1,1},
-                            {1,0,1,1,1,1,1},
-                            {1,0,1,1,1,1,1},
-                            {1,0,1,1,1,0,1},
-                            {0,1,0,0,0,0,0},
-                            {0,1,1,0,1,0,0}};
-    
     int posicion_fila_columna_bandera[3] = {0,0,0};
-    int fila = 6; 
+    int fila = 0; 
     int columna = 0;  
     int bandera = 0;
     int *derecha;
@@ -191,65 +178,42 @@ int main(){
     int *abajo;
     int *arriba; 
 
-    
-    derecha = avanza_derecha(laberinto, fila, columna, posicion_fila_columna_bandera);
-    fila = derecha[0];
-    columna = derecha[1];
-    bandera = derecha[2];    
-    printf("%d %d %d\n\n", fila, columna, bandera);
-
-
-    abajo = avanza_abajo(laberinto, fila, columna, posicion_fila_columna_bandera);
-    fila = abajo[0];
-    columna = abajo[1];
-    bandera = abajo[2];    
-    printf("%d %d %d\n\n", fila, columna, bandera);
-
-    /*
-
-    Listas 
-
-    derecha = avanza_derecha(laberinto, fila, columna, posicion_fila_columna_bandera);
-    fila = derecha[0];
-    columna = derecha[1];
-    bandera = derecha[2];    
-    printf("%d %d %d\n\n", fila, columna, bandera);
-
-    Listas
-    izquierda = avanza_izquierda(laberinto, fila, columna, posicion_fila_columna_bandera);
-    fila = izquierda[0];
-    columna = izquierda[1];
-    bandera = izquierda[2];    
-    printf("%d %d %d\n\n", fila, columna, bandera);
-                    
-    /*
-    while((fila != 2)&&(columna != 2)){
+    while ((fila != 7) && (columna != 7)){
+        
         switch (bandera)
         {
         case 0:
-            derecha = avanza_derecha(laberinto, fila, columna, pos_columna, posicion_fila_columna_bandera);
+            derecha = avanza_derecha(laberinto, fila, columna, posicion_fila_columna_bandera);
             fila = derecha[0];
             columna = derecha[1];
-            bandera = derecha[2];    
-            printf("%d %d %d\n\n", fila, columna, bandera);
+            bandera = derecha[2];
             break;
         case 1:
-            izquierda = avanza_izquierda(laberinto, fila, columna, pos_columna, posicion_fila_columna_bandera);
+            izquierda = avanza_izquierda(laberinto, fila, columna, posicion_fila_columna_bandera);
             fila = izquierda[0];
             columna = izquierda[1];
             bandera = izquierda[2];
-            printf("%d %d %d\n\n", fila, columna, bandera);
             break;
         case 2:
-            abajo = avanza_abajo(laberinto, fila, columna, pos_fila, posicion_fila_columna_bandera);
+            abajo = avanza_abajo(laberinto, fila, columna, posicion_fila_columna_bandera);
             fila = abajo[0];
             columna = abajo[1];
             bandera = abajo[2];
-            printf("%d %d %d\n\n", fila, columna, bandera);
             break;
-        default:
+        case 3:
+            arriba = avanza_arriba(laberinto, fila, columna, posicion_fila_columna_bandera);
+            fila = arriba[0];
+            columna = arriba[1];
+            bandera = arriba[2];
             break;
         }
+
+        if ((fila == 6) && (columna == 6)){
+            laberinto[fila][columna] = 2;
+            fila += 1;
+            columna += 1;
+        }
+
         for(int i = 0; i < 7; i++){
             for(int j = 0; j < 7; j++){
                 printf("%d ", laberinto[i][j]);
@@ -258,6 +222,5 @@ int main(){
         }
         printf("\n");
     }
-    */
    return 0;
 }
