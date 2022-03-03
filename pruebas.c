@@ -210,6 +210,7 @@ int main(){
 
         if ((fila == 6) && (columna == 6)){
             laberinto[fila][columna] = 2;
+
             fila += 1;
             columna += 1;
         }
@@ -222,5 +223,6 @@ int main(){
         }
         printf("\n");
     }
+    printf("\n *** Felicidades has completado el laberinto *** \n\n");
    return 0;
 }
